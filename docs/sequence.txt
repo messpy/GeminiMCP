@@ -1,0 +1,27 @@
+User
+  │
+  │ (Enter natural language prompt)
+  ▼
+mcp_execute.py
+  │
+  │───> sql.py
+  │       (Get prompt template: command_format)
+  │<────
+  │
+  │───> llm_client.py
+  │       (Send prompt to LLM API, get response)
+  │<────
+  │
+  │ (Extract shell command using regex: $ (.+) )
+  │
+  │───> subprocess
+  │       (Execute extracted command)
+  │<────
+  │
+  │───> db_logger.py
+  │       (Save session, prompt, response, and command result)
+  │<────
+  │
+  │ (Output result to terminal)
+  ▼
+User

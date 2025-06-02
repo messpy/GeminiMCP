@@ -1,0 +1,29 @@
+.
+├── README.md              # プロジェクト概要・利用手順
+├── bin/                   # （未記載）補助スクリプト、実行ファイル用
+├── config/
+│   ├── config.yaml        # LLM/API/DB設定
+│   └── setup.sql          # DB初期化・DDL・マスタデータ
+├── data/
+│   └── pimcp.db           # SQLite3本体（全データ保存先）
+├── docs/
+│   ├── sequence.png       # シーケンス図画像
+│   └── sequence.txt       # シーケンス図テキスト説明
+├── requests.txt           # Python依存パッケージ一覧（通常 requirements.txt）
+├── scripts/               # 補助的なバッチや自動化スクリプト用（中身次第で用途分岐）
+├── src/
+│   ├── cli/               # CLI用モジュール/コマンド群（未記載：コマンド個別化に最適）
+│   ├── db/                # DB関連ユーティリティ群（DB接続、抽象化、クエリ管理）
+│   ├── db_logger.py       # DBへのログ保存ユーティリティ（セッション/履歴/汎用）
+│   ├── init_db.py         # DB初期化スクリプト（setup.sql適用用・CLIからも実行可）
+│   ├── llm/               # LLM関連ロジック（APIラッパー・プロンプト管理などを細分化）
+│   ├── llm_client.py      # LLM通信ラッパー（Gemini APIリクエスト/レスポンス制御）
+│   ├── logs/              # ログ出力ファイルや過去ログ格納ディレクトリ（自動生成型）
+│   ├── manage_db.py       # DB管理・移行・バックアップ用スクリプト（CLI補助想定）
+│   ├── mcp_execute.py     # MCP本体（自然文→コマンド抽出→実行→DB保存）
+│   ├── module/            # 汎用モジュール集（共通化部品、拡張機能、ヘルパー等）
+│   ├── run.py             # 全体のCLIランチャー・統括エントリーポイント
+│   ├── send_prompt.py     # LLMへのプロンプト送信/応答取得（対話モードCLI）
+│   ├── sql.py             # SQLテンプレート管理、複雑なクエリ一元化
+│   └── update_sql.py      # LLMプロンプトやSQLテンプレートのDB登録/更新補助スクリプト
+└── tests/                 # 単体/統合テスト・モック用スクリプト置き場
