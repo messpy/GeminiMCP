@@ -4,3 +4,5 @@ model_name: "gemini-2.5-flash-preview-05-20"
 db_file: "./data/db.db"
 
 set_up: "setup.sql"
+
+language: "ja"

@@ -3,13 +3,12 @@
 import sqlite3
 import os
 from datetime import datetime
-import yaml
 import subprocess
-from config.loader import *
+from config.loader import get_config, get_db_file, get_language
 
 config = get_config()
-
 DB_FILE = get_db_file()
+lang = get_language()
 
 
 def select_llm_prompt(name):
@@ -75,15 +74,26 @@ def update_llm_prompt(name, description, content):
 if __name__ == "__main__":
     name = "command_format"
     description = "For Linux command format output"
-    pwd = subprocess.run("pwd", capture_output=True,text=True ).stdout
+    pwd_cmd = subprocess.run("pwd", capture_output=True,text=True ).stdout
+    tree_cmd = subprocess.run(
+        "tree -I '__pycache__|venv|.venv|.mypy_cache|.pytest_cache|*.pyc|*.pyo|*.egg-info|.git|.idea'",
+        capture_output=True, text=True, shell=True
+    ).stdout
 
     content = f"""
-        You are a Linux administrator.
+        You are a Linux administrator and adviser.
         Please interpret the user's prompt and execute the command in one line.
         Always put the command after $.
         If there are multiple lines, connect them with &&.
+        AND Comment the command with #.
+        and output the result in the following format:
+        ALL Comment output language is {lang}
 
-        {pwd}$
+        Current dir is {pwd_cmd}$
+        tree -I '__pycache__|venv|.venv|.mypy_cache|.pytest_cache|*.pyc|*.pyo|*.egg-info|.git|.idea'$
+
+        {tree_cmd}
+
         """
 
     select = input("LLM prompt management\n1.SELECT\n2.INSERT\n3.UPDATE: ")

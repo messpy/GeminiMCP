@@ -9,7 +9,7 @@ def main():
     session_id = f"llm_{uuid.uuid4().hex[:6]}"
     logger.save_session(session_id)
 
-    print("プロンプトを入力してください（ENDで送信）：")
+    print("Enter your prompt (type END to submit):")
     lines = []
     while True:
         line = input()
@@ -23,12 +23,12 @@ def main():
     try:
         llm = LLMClient()
         reply = llm.send_prompt(prompt)
-        print("\n=== 応答 ===")
+        print("\n=== Response ===")
         print(reply)
-        logger.save_llm_answer(prompt_id=None, response_text=reply)  # prompt_idは後で結合可
-        print(f"DB保存完了: セッションID={session_id}")
+        logger.save_llm_answer(prompt_id=None, response_text=reply)  # prompt_id can be linked later
+        print(f"DB save completed: session_id={session_id}")
     except Exception as e:
-        print("APIエラー:", e)
+        print("API error:", e)
 
 if __name__ == "__main__":
     main()

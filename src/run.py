@@ -14,10 +14,10 @@ def mcp_execute():
     subprocess.run(["python", "mcp_execute.py"], check=True, cwd=os.path.dirname(__file__))
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="PiLLMプロジェクト起動スクリプト")
-    parser.add_argument("--init-db", action="store_true", help="DB初期化（setup.sql実行）")
-    parser.add_argument("--send-prompt", action="store_true", help="send_prompt.py 実行")
-    parser.add_argument("--mcp", action="store_true", help="mcp_execute.py 実行")
+    parser = argparse.ArgumentParser(description="GeminiMCP launcher script")
+    parser.add_argument("--init-db", action="store_true", help="Initialize the database (run setup.sql)")
+    parser.add_argument("--send-prompt", action="store_true", help="Run send_prompt.py")
+    parser.add_argument("--mcp", action="store_true", help="Run mcp_execute.py")
     args = parser.parse_args()
 
     if args.init_db:
@@ -27,4 +27,4 @@ if __name__ == "__main__":
     elif args.mcp:
         mcp_execute()
     else:
-        print("オプションを指定してください (--init-db / --send-prompt / --mcp)")
+        print("Please specify an option (--init-db / --send-prompt / --mcp)")

@@ -58,3 +58,10 @@ CREATE TABLE llm_prompts (
     content TEXT,
     created_at TEXT
 );
+
+INSERT INTO llm_prompts (name, description, content, created_at) VALUES (
+    'command_format',
+    'Generate a Linux command from a natural language instruction.',
+    'Please convert the following instruction into a Linux shell command. Output only the command, prefixed by a dollar sign ($).',
+    datetime('now')
+);
