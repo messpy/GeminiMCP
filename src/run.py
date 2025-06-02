@@ -11,7 +11,7 @@ def send_prompt():
     subprocess.run(["python", "send_prompt.py"], check=True, cwd=os.path.dirname(__file__))
 
 def mcp_execute():
-    subprocess.run(["python", "mcp_execute.py"], check=True, cwd=os.path.dirname(__file__))
+    subprocess.run(["python", os.path.join(os.path.dirname(__file__), "mcp_execute.py")], check=True)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="GeminiMCP launcher script")

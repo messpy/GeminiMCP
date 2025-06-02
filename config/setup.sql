@@ -12,6 +12,35 @@ CREATE TABLE sessions (
     created_at TEXT
 );
 
+CREATE TABLE mcp_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id TEXT,
+    is_error INTEGER,
+    status_code INTEGER,
+    error_message TEXT,
+    prompt_text TEXT,
+    command TEXT,
+    command_type TEXT,
+    result TEXT,
+    llm_response TEXT,
+    tags TEXT,
+    duration REAL,
+    user TEXT,
+    created_at TEXT,
+    FOREIGN KEY(session_id) REFERENCES sessions(session_id)
+);
+
+CREATE TABLE llm_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id TEXT,
+    prompt_text TEXT,
+    llm_response TEXT,
+    tags TEXT,
+    user TEXT,
+    created_at TEXT,
+    FOREIGN KEY(session_id) REFERENCES sessions(session_id)
+);
+
 CREATE TABLE prompts (
     prompt_id INTEGER PRIMARY KEY AUTOINCREMENT,
     session_id TEXT,

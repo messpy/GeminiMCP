@@ -5,6 +5,11 @@
 from datetime import datetime
 from config.loader import get_db_connection
 
+def _safe_str(val):
+    if isinstance(val, str):
+        return val.encode("utf-8", errors="replace").decode("utf-8", errors="replace")
+    return val
+
 class DBLogger:
     def save_session(self, session_id):
         now = datetime.now().isoformat()
@@ -34,14 +39,24 @@ class DBLogger:
             (session_id, prompt_id, command, output, notes, tags, now)
         )
 
+    def save_mcp_log(self, session_id, is_error, status_code, error_message, prompt_text, command, command_type, result, llm_response, tags, duration, user):
+        now = datetime.now().isoformat()
+        self._execute(
+            """INSERT INTO mcp_logs (
+                session_id, is_error, status_code, error_message, prompt_text, command, command_type, result, llm_response, tags, duration, user, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (session_id, is_error, status_code, error_message, prompt_text, command, command_type, result, llm_response, tags, duration, user, now)
+        )
+
     def _execute(self, sql, params):
         try:
             conn = get_db_connection()
             cur = conn.cursor()
-            cur.execute(sql, params)
+            safe_params = tuple(_safe_str(p) for p in params)
+            cur.execute(sql, safe_params)
             conn.commit()
         except Exception as e:
-            print(f"❌ DB save error: {e}")
+            print(f"X DB save error: {e}")
         finally:
             if 'conn' in locals():
                 conn.close()
