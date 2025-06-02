@@ -16,6 +16,13 @@ CHECK_SCRIPT = os.path.join(os.path.dirname(__file__), "check.py")
 
 def create_db():
     """Initialize the database using setup.sql."""
+    # DBファイルのディレクトリを作成（なければ）
+    db_path = get_db_connection().database
+    db_dir = os.path.dirname(db_path)
+    if db_dir and not os.path.exists(db_dir):
+        os.makedirs(db_dir)
+        print(f"Created directory for DB: {db_dir}")
+
     if not os.path.exists(SETUP_SQL):
         print(f"X setup.sql not found at {SETUP_SQL}")
         return False
